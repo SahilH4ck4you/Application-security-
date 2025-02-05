@@ -1,0 +1,2 @@
+- https://naumankh4n.medium.com/a-click-can-cause-1600-auth0-misconfig-9234aedad55c
+- https://www.clear-gate.com/blog/auth0-misconfiguration/

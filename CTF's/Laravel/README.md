@@ -1,0 +1,2 @@
+- https://github.com/silnex/LaravelCTF
+- https://github.com/silnex/simple-laravel-race-condition-test
