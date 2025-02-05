@@ -1,0 +1,12 @@
+AWS_KEY /(AKIA[A-Z0-9]{12,})/ path:.env
+ZENDESK_TOKEN /[a-zA-Z0-9]{40,}/
+ZENDESK path:*.env
+ZENDESK path:*.config
+ZENDESK path:production.rb
+API_KEY path:*.env
+m4cddrSecretKey
+SecretKey
+
+
+
+https://www.linkedin.com/posts/andrewgoca_github-bugbountytips-dorks-ugcPost-7054191335339085824-_F1Y?utm_source=share&utm_medium=member_desktop

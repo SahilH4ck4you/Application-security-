@@ -1,0 +1,70 @@
+#!/bin/bash
+
+# Take input from user
+echo "Enter the domain to find subdomains for: "
+read domain
+
+# Create output directory
+output_dir="subdomains_${domain}_$(date +"%Y_%m_%d_%H_%M_%S")"
+mkdir "$output_dir"
+
+# 1. Passive: Certspotter
+echo "Finding subdomains using Certspotter..."
+certspotter_output="$output_dir/certspotter.txt"
+curl -s "https://certspotter.com/api/v0/certs?domain=$domain" | jq -r '.[].dns_names[]' | sort -u > "$certspotter_output"
+
+# 2. Passive: Sublist3r
+echo "Finding subdomains using Sublist3r..."
+sublist3r_output="$output_dir/sublist3r.txt"
+sublist3r -d "$domain" -o "$sublist3r_output"
+
+# 3. Passive: Amass
+echo "Finding subdomains using Amass..."
+amass_output="$output_dir/amass.txt"
+amass enum -passive -d "$domain" -o "$amass_output"
+
+# 4. Passive: Shodan
+echo "Finding subdomains using Shodan..."
+shodan_output="$output_dir/shodan.txt"
+shodan search "hostname:$domain" | jq -r '.matches[].hostnames[]' | sort -u > "$shodan_output"
+
+# 5. Passive: Censys
+echo "Finding subdomains using Censys..."
+censys_output="$output_dir/censys.txt"
+censys search --type=ipv4 "$domain" -o "$censys_output"
+
+# 6. Passive: VirusTotal
+echo "Finding subdomains using VirusTotal..."
+virustotal_output="$output_dir/virustotal.txt"
+curl -s "https://www.virustotal.com/ui/domains/$domain/subdomains?limit=40" | jq -r '.data[]' | sort -u > "$virustotal_output"
+
+# 7. Passive: CRT.sh
+echo "Finding subdomains using CRT.sh..."
+crtsh_output="$output_dir/crtsh.txt"
+curl -s "https://crt.sh/?q=%25.$domain&output=json" | jq -r '.[].name_value' | sed 's/\*\.//g' | sort -u > "$crtsh_output"
+
+# 8. Active: Nmap
+echo "Finding subdomains using Nmap..."
+nmap_output="$output_dir/nmap.txt"
+nmap -Pn -n -sS -p 80,443 "$domain" -oG - | grep "Host:" | cut -d " " -f2 | sort -u > "$nmap_output"
+
+# 9. Active: Masscan
+echo "Finding subdomains using Masscan..."
+masscan_output="$output_dir/masscan.txt"
+masscan "$domain" -p80,443 --rate 10000 -oL "$masscan_output" > /dev/null
+awk '{print $4}' "$masscan_output" | sort -u > "$masscan_output.tmp"
+mv "$masscan_output.tmp" "$masscan_output"
+
+# 10. Active: DNS Enumeration
+echo "Finding subdomains using DNS enumeration..."
+dnsenum_output="$output_dir/dnsenum.txt"
+dnsenum --enum -f "$domain" -o "$dnsenum_output"
+
+# 11. Active: DNS Brute Forcing
+echo "Finding subdomains using DNS brute forcing..."
+dnsbf_output="$output_dir/dnsbf.txt
+
+# Combine all results
+cat *.txt | sort -u > subdomains.txt
+
+echo "Subdomains saved to subdomains.txt."

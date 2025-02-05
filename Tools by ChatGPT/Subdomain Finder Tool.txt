@@ -1,0 +1,369 @@
+#!/bin/bash
+
+# Get user input for target domain
+read -p "Enter target domain: " domain
+
+echo -e "\nUsing Active Techniques:\n"
+
+# 1. DNS Enumeration using Dig
+echo -e "\n[*] DNS Enumeration using Dig:\n"
+dig +short $domain | grep -Eo '([a-zA-Z0-9]+\.)+[a-zA-Z]+'
+
+# 2. Zone transfer using Dig
+echo -e "\n[*] Zone transfer using Dig:\n"
+dig axfr $domain | grep -Eo '([a-zA-Z0-9]+\.)+[a-zA-Z]+'
+
+# 3. DNS Enumeration using Nslookup
+echo -e "\n[*] DNS Enumeration using Nslookup:\n"
+nslookup -type=any $domain | grep -Eo '([a-zA-Z0-9]+\.)+[a-zA-Z]+'
+
+# 4. Reverse DNS Enumeration using Nslookup
+echo -e "\n[*] Reverse DNS Enumeration using Nslookup:\n"
+nslookup -type=ptr $domain | grep -Eo '([a-zA-Z0-9]+\.)+[a-zA-Z]+'
+
+# 5. Ping Sweep
+echo -e "\n[*] Ping Sweep:\n"
+nmap -sn $domain/24 | grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}'
+
+# 6. TCP/UDP Port Scanning using Nmap
+echo -e "\n[*] TCP/UDP Port Scanning using Nmap:\n"
+nmap -p- -sS -sU $domain | grep open | cut -d'/' -f1 | sort -u
+
+# 7. HTTP(S) Enumeration using Nmap
+echo -e "\n[*] HTTP(S) Enumeration using Nmap:\n"
+nmap --script=http-enum,http-methods,http-robots.txt -p80,443 $domain
+
+# 8. SMTP Enumeration using Nmap
+echo -e "\n[*] SMTP Enumeration using Nmap:\n"
+nmap -p25 --script=smtp-enum-users.nse $domain
+
+# 9. SNMP Enumeration using Nmap
+echo -e "\n[*] SNMP Enumeration using Nmap:\n"
+nmap -sU -p161 --script=snmp-brute,snmp-info $domain
+
+# 10. DNS Zone Transfer using Nmap
+echo -e "\n[*] DNS Zone Transfer using Nmap:\n"
+nmap --script=dns-zone-transfer -p53 $domain
+
+# 11. Banner Grabbing using Netcat
+echo -e "\n[*] Banner Grabbing using Netcat:\n"
+nc -v -z $domain 1-65535 2>&1 | grep -Eo '([a-zA-Z0-9]+\.)+[a-zA-Z]+'
+
+# 12. Banner Grabbing using Telnet
+echo -e "\n[*] Banner Grabbing using Telnet:\n"
+for port in $(nmap -p- --min-rate=1000 -T4 $domain | grep ^[0-9] | cut -d '/' -f 1); do telnet $domain $port; done | grep -Eo '([a-zA-Z0-9]+\.)+[a-zA-Z]+'
+
+echo -e "\nUsing Passive Techniques:\n"
+
+# 13. Google Dorking
+echo -e "\n[*] Google Dorking:\n
+dorkscan -s google -q "site:$domain" -v | grep -Eo '([a-zA-Z0-9]+.)+[a-zA-Z]+'
+
+#14. Scraping search engine results using Sublist3r
+echo -e "\n[*] Scraping search engine results using Sublist3r:\n"
+sublist3r -d $domain -v | grep -Eo '([a-zA-Z0-9]+.)+[a-zA-Z]+'
+
+#15. Scraping search engine results using Amass
+echo -e "\n[*] Scraping search engine results using Amass:\n"
+amass enum -d $domain | grep -Eo '([a-zA-Z0-9]+.)+[a-zA-Z]+'
+
+#16. Scraping search engine results using crt.sh
+echo -e "\n[*] Scraping search engine results using crt.sh:\n"
+curl -s "https://crt.sh/?q=$domain&output=json" | jq -r '.[].name_value' | sed 's/*.//g' | sort -u
+
+#17. Scraping search engine results using certspotter
+echo -e "\n[*] Scraping search engine results using certspotter:\n"
+curl -s "https://certspotter.com/api/v0/certs?domain=$domain" | jq -r '.[].dns_names[]' | sed 's/^*.//g' | sort -u
+
+#18. Scraping search engine results using ThreatCrowd
+echo -e "\n[*] Scraping search engine results using ThreatCrowd:\n"
+curl -s "https://www.threatcrowd.org/searchApi/v2/domain/report/?domain=$domain" | jq -r '.subdomains[]' | sort -u
+
+19. Scraping search engine results using VirusTotal
+echo -e "\n[*] Scraping search engine results using VirusTotal:\n"
+curl -s "https://www.virustotal.com/ui/domains/$domain/subdomains" | jq -r '.data[].id' | cut -d'.' -f1 | sort -u
+
+20. Scraping search engine results using SecurityTrails
+echo -e "\n[*] Scraping search engine results using SecurityTrails:\n"
+curl -s "https://securitytrails.com/list/apex_domain/$domain" | grep -Eo '([a-zA-Z0-9]+.)+[a-zA-Z]+'
+
+21. Scraping search engine results using BinaryEdge
+echo -e "\n[*] Scraping search engine results using BinaryEdge:\n"
+curl -s "https://api.binaryedge.io/v2/query/domains/subdomain/$domain" -H "X-Key: YOUR_API_KEY" | jq -r '.events[].target' | sort -u
+
+22. Scraping search engine results using Dns.bufferover.run
+echo -e "\n[*] Scraping search engine results using Dns.bufferover.run:\n"
+curl -s "https://dns.bufferover.run/dns?q=.$domain" | jq -r '.FDNS_A[]' | cut -d',' -f2 | sort -u
+
+23. Scraping search engine results using certstream
+echo -e "\n[] Scraping search engine results using certstream:\n"
+certstream --quiet --disable_color | grep -o "[".$domain" | cut -d'"' -f2 | sort -u
+
+# 24. DNS enumeration using Spyse
+echo -e "\n[*] Passive DNS enumeration using Spyse:\n"
+curl -s "https://api.spyse.com/v1/subdomains?domain=$domain" -H "Authorization: YOUR_API_KEY" | jq -r '.subdomains[]' | sort -u
+
+# 25. DNS enumeration using PassiveTotal
+echo -e "\n[*] Passive DNS enumeration using PassiveTotal:\n"
+curl -s "https://api.passivetotal.org/v2/whois/search?query=$domain" -H "Content-Type: application/json" -H "Accept: application/json" --user "YOUR_USERNAME:YOUR_API_KEY" | jq -r '.results[].subdomains[]' | sort -u
+
+# 26. Active DNS enumeration using MassDNS
+echo -e "\n[*] Active DNS enumeration using MassDNS:\n"
+echo $domain | /usr/bin/massdns -r /usr/share/massdns/lists/resolvers.txt -t A -o S | awk '{print $1}' | sort -u
+
+# 27. DNS Enumeration using Fierce
+echo -e "\n[*] DNS Enumeration using Fierce:\n"
+fierce -dns $domain | grep -E "\b[A-Za-z0-9]+\.$domain\b" | sort -u
+
+# 28. DNS Enumeration using DNSRecon
+echo -e "\n[*] DNS Enumeration using DNSRecon:\n"
+dnsrecon -d $domain -t std -D /usr/share/wordlists/dnsmap.txt | grep -E "\b[A-Za-z0-9]+\.$domain\b" | sort -u
+
+# 29. DNS Enumeration using Enum4Linux
+echo -e "\n[*] DNS Enumeration using Enum4Linux:\n"
+enum4linux -a $domain | grep -E "\b[A-Za-z0-9]+\.$domain\b" | sort -u
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+------> Active 
+
+
+#!/bin/bash
+
+echo "Enter the domain to find subdomains: "
+read domain
+
+# Technique 1: Brute Force Subdomain Enumeration using Nmap NSE
+echo -e "\n[*] Brute Force Subdomain Enumeration using Nmap NSE:\n"
+nmap -p80,443 --script dns-brute.nse $domain | grep "^Host" | awk '{print $2}' | sort -u
+
+# Technique 2: Brute Force Subdomain Enumeration using Fierce
+echo -e "\n[*] Brute Force Subdomain Enumeration using Fierce:\n"
+fierce -dns $domain -threads 20 | grep "^[-_a-zA-Z0-9\.]*$"
+
+# Technique 3: Brute Force Subdomain Enumeration using Gobuster
+echo -e "\n[*] Brute Force Subdomain Enumeration using Gobuster:\n"
+gobuster dns -d $domain -w /usr/share/wordlists/dnsmap.txt -q | cut -d " " -f 2 | sort -u
+
+# Technique 4: DNS Enumeration using DNSRecon
+echo -e "\n[*] DNS Enumeration using DNSRecon:\n"
+dnsrecon -d $domain -t axfr | grep "has been found" | awk '{print $1}' | sort -u
+
+# Technique 5: DNS Enumeration using Dig
+echo -e "\n[*] DNS Enumeration using Dig:\n"
+for sub in $(cat /usr/share/wordlists/dnsmap.txt); do
+  dig +short $sub.$domain | grep -v "^$";
+done | sort -u
+
+# Technique 6: DNS Enumeration using Dnsenum
+echo -e "\n[*] DNS Enumeration using Dnsenum:\n"
+dnsenum $domain | grep "^[-_a-zA-Z0-9\.]*$" | sort -u
+
+# Technique 7: DNS Enumeration using Dnswalk
+echo -e "\n[*] DNS Enumeration using Dnswalk:\n"
+dnswalk $domain | awk '{print $1}' | grep "$domain" | sort -u
+
+# Technique 8: DNS Enumeration using Dnsmap
+echo -e "\n[*] DNS Enumeration using Dnsmap:\n"
+dnsmap $domain -r /usr/share/wordlists/dnsmap.txt | awk '{print $2}' | sort -u
+
+# Technique 9: Active DNS Enumeration using MassDNS
+echo -e "\n[*] Active DNS enumeration using MassDNS:\n"
+echo $domain | /usr/bin/massdns -r /usr/share/massdns/lists/resolvers.txt -t A -o S | awk '{print $1}' | sort -u
+
+# Technique 10: Subdomain Enumeration using Aquatone
+echo -e "\n[*] Subdomain Enumeration using Aquatone:\n"
+aquatone-discover -d $domain
+
+# Technique 11: Subdomain Enumeration using Subbrute
+echo -e "\n[*] Subdomain Enumeration using Subbrute:\n"
+subbrute -d $domain -t 10 -w /usr/share/wordlists/dnsmap.txt
+
+# Technique 12: Subdomain Enumeration using Amass
+echo -e "\n[*] Subdomain Enumeration using Amass:\n"
+amass enum -passive -d $domain | awk '{print $1}' | sort -u
+
+# Technique 13: Subdomain Enumeration using Sublist3r
+echo -e "\n[*] Subdomain Enumeration using Sublist3r:\n"
+python3 /opt/Sublist3r/sublist3r.py -d $domain -t 10 -v -o subdomains.txt
+cat subdomains.txt | sort -u
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----> Passive
+
+#!/bin/bash
+
+# Take input from user
+read -p "Enter a domain to perform subdomain enumeration: " domain
+
+# Technique 1: Search engines
+echo -e "\n[*] Subdomain Enumeration using Search Engines:\n"
+curl -s "https://crt.sh/?q=%25.$domain&output=json" | jq -r '.[].name_value' | sed 's/\*\.//g' | sort -u
+
+# Technique 2: Certificate Transparency Logs
+echo -e "\n[*] Subdomain Enumeration using Certificate Transparency Logs:\n"
+curl -s "https://crt.sh/?q=%.$domain&output=json" | jq -r '.[].name_value' | sed 's/\*\.//g' | sort -u
+
+# Technique 3: Passive DNS
+echo -e "\n[*] Subdomain Enumeration using Passive DNS:\n"
+curl -s "https://dns.bufferover.run/dns?q=.$domain" | sed 's/,/\n/g' | grep ".$domain" | cut -d'"' -f2 | sort -u
+
+# Technique 4: Reverse WHOIS
+echo -e "\n[*] Subdomain Enumeration using Reverse WHOIS:\n"
+curl -s "https://reversewhois.domaintools.com/search/?q=$domain" | grep -oP '(?<=href="/profile/).*?(?=")' | sed "s/^/$domain./" | sort -u
+
+# Technique 5: Netcraft
+echo -e "\n[*] Subdomain Enumeration using Netcraft:\n"
+curl -s "https://searchdns.netcraft.com/?restriction=site+contains&host=.$domain&lookup=wait..&position=limited" | grep -oP "(?<=<td>\*\.)[^<]+" | sort -u
+
+# Technique 6: ThreatCrowd
+echo -e "\n[*] Subdomain Enumeration using ThreatCrowd:\n"
+curl -s "https://www.threatcrowd.org/searchApi/v2/domain/report/?domain=$domain" | jq -r '.subdomains[]' | sort -u
+
+# Technique 7: SecurityTrails
+echo -e "\n[*] Subdomain Enumeration using SecurityTrails:\n"
+curl -s "https://securitytrails.com/list/apex_domain/$domain" | grep -oP '(?<=<a href="/list/ip/)[^"]+(?=</a>)' | sort -u
+
+# Technique 8: VirusTotal
+echo -e "\n[*] Subdomain Enumeration using VirusTotal:\n"
+curl -s "https://www.virustotal.com/ui/domains/$domain/subdomains?limit=40" | jq -r '.data[]' | sort -u
+
+# Technique 9: Rapid7 FDNS
+echo -e "\n[*] Subdomain Enumeration using Rapid7 FDNS:\n"
+curl -s "https://opendata.rapid7.com/sonar.fdns_v2/_search?q=name:$domain&size=10000" | jq -r '.hits.hits[].fields.name' | sort -u
+
+# Technique 10: HackerTarget
+echo -e "\n[*] Subdomain Enumeration using HackerTarget:\n"
+curl -s "https://api.hackertarget.com/hostsearch/?q=$domain" | cut -d',' -f1 | sort -u
+
+# Technique 11: BinaryEdge
+echo -e "\n[*] Subdomain Enumeration using BinaryEdge:\n"
+curl -s "https://api.binaryedge.io/v2/query/domains/subdomain/$domain" -H "X-Key: YOUR_API_KEY" | jq -r '.events[] | .target' | sort -u
+
+
+
+
+
+
+
+Here's a list of some of the commonly used tools and techniques for subdomain enumeration, both active and passive:
+
+Active techniques:
+
+Sublist3r
+Amass
+Knockpy
+Subbrute
+Aquatone
+Nmap
+Fierce
+DNSrecon
+MassDNS
+BruteforceDNS
+Recon-ng
+theHarvester
+DNSmap
+DNSenum
+DnsTwist
+SubFinder
+Censys
+Google Cloud Asset Inventory
+Shodan
+Spyse
+VirusTotal
+ThreatMiner
+Certspotter
+SecurityTrails
+dnsbufferover
+rapid7fdns
+sitedossier
+threatcrowd
+dnsdumpster
+hackertarget
+
+Passive techniques:
+
+PassiveTotal
+ThreatConnect
+RiskIQ
+DomainTools
+SpyOnWeb
+Netcraft
+CentralOps
+Robtex
+Sublist3r Online
+SecurityTrails
+BinaryEdge
+AnubisDB
+CertDB
+Crt.sh
+Riddler
+Wayback Machine
+FindSubdomains
+Sonar
+URLScan
+Spyse
+Farsight Security
+dns.bufferover.run
+censys.io
+passive.ipvoid.com
+pentest-tools.com
+riddler.io
+viewdns.info
+web.archive.org
+xsshunter.com
+zonetransfer.me

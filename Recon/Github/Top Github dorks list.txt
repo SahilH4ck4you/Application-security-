@@ -1,0 +1,90 @@
+Top Github dorks list👇
+
+bucket_password
+bucketeer_aws_access_key_id
+bucketeer_aws_secret_access_key
+docker_passwd
+docker_password
+dockerhub_password
+dockerhubpassword
+app_secret
+appkey
+appkeysecret
+application_key
+appsecret
+appspot
+auth_token
+authorizationToken
+access_key
+access_token
+admin_pass
+admin_user
+datadog_api_key
+datadog_app_key
+db_password
+db_server
+db_username
+dbpasswd
+dbpassword
+dbuser
+browserstack_access_key
+filename:_netrc password
+filename:.bash_history
+filename:server.cfg rcon password
+filename:settings
+filename:settings.py SECRET_KEY
+filename:sftp-config.json
+
+
+log.jsp
+dashboard
+admin
+aws
+config
+token
+oauth
+api
+access
+auth
+internal
+dev
+KEY
+API
+API_KEY
+TOKEN
+ACCESS_TOKEN
+SECRETKEY
+CLIENT-SECRET
+CLIENT_SECRET
+DB_PASSWORD
+ROOT_PASSWORD
+JDBC PASSWORD
+X-ATLASSIAN-TOKEN
+JIRA_PASSWORD
+MAILGUN KEY
+FIREBASE KEY
+SECRET
+DEV
+PROD
+JENKINS
+CONFIG
+SSH
+FTP
+MYSQL_PASSWORD
+MYSQL
+ADMIN
+AWS
+DASHBOARD
+BUCKET
+ST NO
+CVV
+GITHUB_TOKEN
+OTP
+OAUTH
+AUTHORIZATION
+LDAP
+INTERNAL
+JWT
+PASSWORD
+PWD
+SEND_KEYS

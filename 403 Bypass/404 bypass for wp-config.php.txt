@@ -1,0 +1,5 @@
+404 bypass
+
+target.com/wp-config.php => 404 not found
+target.com/wp-config.php.… ==> 200 ok and downloaded
+wp-config.php.swp ==>>200 ok

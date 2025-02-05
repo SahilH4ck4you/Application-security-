@@ -1,0 +1,8 @@
+---> Domain
+crlfuzz -u "http://yatra.com" 
+
+---> With Subdomains
+subfinder -d privateinternetaccess.com -silent | httpx -silent | crlfuzz
+
+---> URLs
+crlfuzz -l /home/kali/Desktop/OpenAi/httpx.txt

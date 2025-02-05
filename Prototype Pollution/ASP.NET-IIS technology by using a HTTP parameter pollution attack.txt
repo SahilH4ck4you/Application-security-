@@ -1,0 +1,3 @@
+www.target.com/pages?parameter=<svg/&parameter=onload=alert()>
+
+<svg/onload=alert()>

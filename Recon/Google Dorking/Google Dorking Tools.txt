@@ -1,0 +1,7 @@
+---> Google Dorking Tools for Bug Hunting/Website Hacking
+
+https://github.com/Viralmaniar/BigBountyRecon
+
+https://dorks.faisalahmed.me/
+
+https://pentest-tools.com/information-gathering/google-hacking

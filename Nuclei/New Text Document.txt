@@ -1,0 +1,1 @@
+cat sub.txt | nuclei -tags cves,osint,tech

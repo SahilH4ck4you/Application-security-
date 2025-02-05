@@ -1,0 +1,20 @@
+https://web.archive.org/cdx/search/cdx?url=*.tink.com/*&collapse=urlkey&output=text&fl=original
+
+9990836644
+
+
+3 Unprotected Exported Services
+3 Unprotected Exported Receivers
+3 Unprotected Exported Activities
+ Loading malicious URL through web view
+ JavascriptInterface remote code execution
+Insecure local data storage
+ Insecure capturing
+ Insecure Transmission
+3.Insecure PendingIntent
+3.1 Insecure Logging
+ Improper custom permissions
+Embedded crypto secrets storage
+Detected the sensitive files like credential files in the app code which normally should
+not be in the project
+ Allowing cleartextTraffic

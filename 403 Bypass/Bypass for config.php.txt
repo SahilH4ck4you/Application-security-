@@ -1,0 +1,7 @@
+Error:
+Download.php?file=../config.php ==> 403
+
+Done:
+Download.php?file=. /config.php⨀ ==> 200
+Download.php?file=⊡ /config.php⨀ ==> 200
+Download.php?file= .⊡ /config.php ==> 200

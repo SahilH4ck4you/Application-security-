@@ -1,0 +1,8 @@
+Wildcard parameter in web API Pentesting
+
+Try to use the following symbols as wildcards: *, %, _, .
+
+~ /api/users/*
+~ /api/users/%
+~ /api/users/_
+~ /api/users/.

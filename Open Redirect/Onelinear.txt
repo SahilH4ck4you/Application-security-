@@ -1,0 +1,4 @@
+subfinder -dL domains.txt ❘ httprobe | tee live_subdomains.txt; cat live_subdomains.txt | waybackurls | tee wayback.txt; cat wayback.txt | sort -u | grep "\?" > torun.txt; nuclei -t Url-Redirection-Catcher.yaml -1 torun.txt
+
+
+https://github.com/SirBugs/Priv8-Nuclei-Templates/blob/main/URL%20Redirection/Url-Redirection-Catcher.yaml

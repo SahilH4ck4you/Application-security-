@@ -1,0 +1,12 @@
+https://github.com/themoonbaba/private_templates
+
+
+• my nuclei template for SpringBoot HeapDump Detection with all possible 403 bypasses I know of:
+
+https://lnkd.in/geUA3Cyy
+
+• Usage : nuclei -l subdomains.txt -t ~/testfolder/springtest.yaml
+
+• Download the heapdump & use the following shortcut before you try memory analyzer method:
+
+grep --text -wr -E "aws_access_key|aws_secret_key|passwd|pwd|password|administrator|pwd|.env|secret|db_password|database|admin-password|BEGIN PRIVATE KEY" ~/heapdump

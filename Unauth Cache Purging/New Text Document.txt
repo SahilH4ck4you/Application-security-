@@ -1,0 +1,9 @@
+curl -s -D - https://target.com/endpoint -o /dev/null
+
+
+
+
+
+> Find Using Burp
+
+Search "X-Cache" Header in Burp search

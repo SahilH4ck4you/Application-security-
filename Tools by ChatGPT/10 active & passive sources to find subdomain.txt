@@ -1,0 +1,25 @@
+#!/bin/bash
+
+echo "Enter the domain to search for subdomains: "
+read domain
+
+# Active sources
+echo "Searching for subdomains using active sources..."
+subfinder -d $domain -o subfinder.txt
+amass enum -passive -d $domain -o amass.txt
+assetfinder -subs-only $domain > assetfinder.txt
+findomain -t $domain -u findomain.txt
+crobat -s $domain -o crobat.txt
+
+# Passive sources
+echo "Searching for subdomains using passive sources..."
+sublist3r -d $domain -o sublist3r.txt
+knockpy $domain -o knockpy.txt
+dnsrecon -d $domain -t std --csv dnsrecon.csv
+aquatone-discover -d $domain -o aquatone.txt
+recon-ng -r recon-ng.txt
+
+# Combine all results
+cat *.txt | sort -u > subdomains.txt
+
+echo "Subdomains saved to subdomains.txt."

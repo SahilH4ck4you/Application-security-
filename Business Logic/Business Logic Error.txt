@@ -1,0 +1,17 @@
+Business Logic Error:
+
+1. Let's say a discount coupon FLAT40 which gives flat 40% off but can only be applied in a minimum cart value of 200 INR.
+
+2. Add items worth 200 INR in the cart, apply coupon and go to the checkout page.
+
+3. Now see if you can modify the content of the cart on the checkout page. If yes, try to remove items from the cart and make the total sum less than 200 INR, let's say 120 INR.
+
+4. If the coupon still remains applied it's a business logic error.
+
+UI validation on applying coupons:
+
+1. If the "Apply coupon" button becomes enabled only after getting a certain amount of value in the cart, then you can try playing with the UI.
+
+2. Add an item which is not eligible for the coupon and try to forcefully apply the coupon by inspecting its element and changing disabled button to enabled.
+
+3. Sometimes when it does not work then additionally you can also try to remove the class value of the button, it would change the appearance of the button on the UI and can also enable the button to trigger the action.

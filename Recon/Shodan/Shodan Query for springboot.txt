@@ -1,0 +1,31 @@
+Favicon Hashes: Assets discovery.
+
+http.favicon.hash:<HASH>
+
+
+ssl.cert.subject.CN:"target.com" 200
+
+http.favicon.hash:116323821 ssl:"domain name"
+
+http.favicon.hash:116323821 ssl:"Org Name"
+
+
+• Get the ips and check if following files exist :
+
+/heapdump
+/env
+/actuator/heapdump
+/actuator/env
+
+• if heapdump is found - it “may” expose db_passwords and other secrets.
+
+
+Note : ignore the Env part of the screenshot . “ Env exposed “itself is not a vulnerability. The main file was heapdump. Also, it is not guaranteed that you will find some juicy information in heapdump. If you don’t find any juicy information in heapdump, collaborate with someone who found such stuff in the past.
+
+
+
+
+
+>> Resource
+
+https://www.linkedin.com/posts/sandeshgg_bugbountytip-bugbountytips-bugbounty-activity-7064287823603892224-HpuC

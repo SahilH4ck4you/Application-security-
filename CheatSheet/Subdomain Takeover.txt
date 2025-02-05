@@ -1,0 +1,1 @@
+subzy run --targets list.txt

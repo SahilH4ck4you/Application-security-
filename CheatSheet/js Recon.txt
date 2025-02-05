@@ -1,0 +1,11 @@
+katana -u https://wscubetech.com/ -jc -d 2 | grep ".js$" | uniq | sort > js_files.txt
+
+
+
+cat subs.txt | httpx | katana -jc -d 2 | grep ".js$" | uniq | sort > js_files.txt
+
+cat subs.txt | katana -jc -d 2 | grep ".js$" | uniq | sort > js_files.txt
+
+
+
+cat js_files.txt | while read url; do python3 /home/kali/tools/secretfinder/SecretFinder.py -i $url -o cli >> secret.txt; done

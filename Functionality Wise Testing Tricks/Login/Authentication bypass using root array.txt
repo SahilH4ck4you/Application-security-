@@ -1,0 +1,10 @@
+> Change the data from
+
+{"email":"test@gmail.com","password":"test"}
+
+
+{"root":{"password":"test","email":"test@gmail.com"}}
+
+
+
+> You will find yourself logged in as an admin.

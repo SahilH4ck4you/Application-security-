@@ -1,0 +1,32 @@
+Looks like:
+---> https://subdomain[.]example[.]com/phpmyadmin
+
+---> https://subdomain[.]example[.]com/phpmyadmin/setup
+
+
+target[.]com/phpmyadmin/setup/index.php
+==> 301 to login page
+
+target[.]com/phpMyAdmin/setup/index.php
+==> 200 to phpmyadmin setup
+
+phpmyadmin 301
+phpMyAdmin 200
+
+
+
+
+
+
+
+
+
+
+
+
+
+Impact: We can run queries and tamper with existing 
+
+servers/register 
+
+nee servers under there domain. It’s possible for an attacker to configure the server without information of the application administrator.

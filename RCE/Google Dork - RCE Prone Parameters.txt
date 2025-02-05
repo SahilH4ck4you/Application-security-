@@ -1,0 +1,3 @@
+inurl:cmd | inurl:exec= | inurl:query= | inurl:code= | inurl:do= | inurl:run= | inurl:read= | inurl:ping= inurl:& site:example[.]com
+
+Find endpoints for RCE testing
